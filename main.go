@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"os"
 	"path/filepath"
+	"sort"
 	"strings"
 
 	"github.com/julienschmidt/httprouter"
@@ -40,14 +41,13 @@ func mainHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
 func apiHandler(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	params := ps.ByName("name")
 	names := strings.Split(params, ",")
+	sort.Strings(names)
 	res := apiResponse(names)
 	w.Header().Set("Content-Type", "text/plain; charset=utf-8")
 	w.Write(res)
 }
 
 func apiResponse(names []string) (res []byte) {
-	res = []byte("\n# Created by go-gitignore\n")
-
 	for _, name := range names {
 		ignoreTitle := []byte(fmt.Sprintf("\n%s %s %s\n", "###", strings.Title(name), "###"))
 		content := ignoreMap[name]

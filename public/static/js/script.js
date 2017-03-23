@@ -27,7 +27,7 @@ new autoComplete({
 })
 
 function getGitIgnore() {
-  var searchStr = tags.toString().toLowerCase()
+  var searchStr = tags.sort().toString().toLowerCase()
   if (searchStr.length != 0) {
     window.location = "/api/" + searchStr
   }
