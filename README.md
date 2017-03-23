@@ -3,12 +3,12 @@
   <a href="https://gitignore.nurlan.co">
     <img src="https://i.nurlan.co/go-gitignore.svg" width="100%" height="120">
   </a>
+  <strong>Generate .gitignore files for your project</strong>
   <br><br>
   <a href='https://travis-ci.org/nurlansu/go-gitignore'>
     <img src='https://travis-ci.org/nurlansu/go-gitignore.svg?branch=appengine'>
   </a>
   <br><br>
-  <strong>Generate .gitignore files for your project</strong>
 </p>
 
 ## What's it ???
