@@ -41,6 +41,7 @@ func apiHandler(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
 	params := ps.ByName("name")
 	names := strings.Split(params, ",")
 	res := apiResponse(names)
+	w.Header().Set("Content-Type", "text/plain; charset=utf-8")
 	w.Write(res)
 }
 
