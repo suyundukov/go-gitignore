@@ -9,19 +9,17 @@ html, body {
   margin: 0
 }
 
-.container {
+body {
   display: table;
-  height: 100%;
-  min-height: 100%;
   width: 100%
 }
 
-.wrapper {
+.container {
   display: table-cell;
   vertical-align: middle
 }
 
-.content {
+.wrapper {
   margin: 0 auto 120px auto;
   width: 50%
 }
@@ -39,14 +37,11 @@ html, body {
 
 .box {
   border: 1px solid $primary;
-  border-radius: 5px 0 0 5px;
   float: left;
-  min-height: 45px;
   width: 540px
 }
 
 .search {
-  border-radius: 5px 0 0 5px;
   height: 45px;
   &.lg {
     padding: 0 2.5%;
@@ -58,13 +53,18 @@ html, body {
   }
 }
 
+.box, .search {
+  border-radius: 5px 0 0 5px
+}
+
 .button {
   background: $primary;
   border-radius: 0 5px 5px 0;
   color: #fff;
+  cursor: pointer;
   height: 47px;
   padding: 0;
-  cursor: pointer;
+  outline: none;
   transition: all 100ms ease-in-out;
   width: 98px
 }
@@ -120,7 +120,7 @@ textarea:focus, input:focus {
 @import 'autocomplete';
 
 @media only screen and (max-width: 1000px) {
-  .content {
+  .wrapper {
     width: 70%
   }
 }
