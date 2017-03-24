@@ -1,36 +1,53 @@
-.autocomplete-suggestions {
-  text-align: center;
-  cursor: pointer;
-  border: 1px solid $primary;
-  border-top: 0;
-  background: #fff;
-  box-shadow: -1px 1px 3px rgba(0, 0, 0, .1);
-  border-radius: 0 0 5px 5px;
-
-  /* core styles should not be changed */
-  position: absolute;
-  display: none;
-  z-index: 9999;
-  max-height: 254px;
-  overflow: hidden;
-  overflow-y: auto;
-  box-sizing: border-box;
-}
-
-.autocomplete-suggestion {
-  position: relative;
-  padding: 5px;
-  line-height: 30px;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  font-size: 20px;
-  color: #333;
-  &.selected {
-    background: $primary;
-    color: #fff
+.awesomplete {
+  margin: 0 5px;
+  width: 100%;
+  [hidden] {
+	  display: none;
   }
-  b {
-    font-weight: normal;
+  .visually-hidden {
+	  position: absolute;
+	  clip: rect(0, 0, 0, 0);
+  }
+  > ul {
+    border-radius: 0 0 .3em .3em;
+	  border: 1px solid #0080FF;
+	  border-top-width: 0;
+	  box-shadow: .05em .2em .6em rgba(0,0,0,.2);
+	  text-shadow: none;
+    cursor: pointer;
+    max-height: 254px;
+    text-align: center;
+    overflow: hidden;
+    overflow-y: auto;
+    position: absolute;
+    left: 0;
+    z-index: 1;
+    box-sizing: border-box;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background: #fff;
+    width: 85%;
+    &:empty {
+	    display: none;
+    }
+    > li {
+	    position: relative;
+      padding: 0;
+      line-height: 35px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      font-size: 20px;
+      color: #333;
+      &:hover {
+	      background: #00aaFF;
+	      color: white;
+      }
+      &[aria-selected="true"] {
+	      background: #0080FF;
+        color: #fff;
+      }
+    }
   }
 }

@@ -10,18 +10,18 @@ html, body {
 }
 
 body {
-  display: table;
+  display: flex;
   width: 100%
 }
 
 .container {
-  display: table-cell;
-  vertical-align: middle
+  margin: auto;
+  width: 50vw
 }
 
 .wrapper {
-  margin: 0 auto 120px auto;
-  width: 50%
+  margin: 0 auto 130px auto;
+  position: relative
 }
 
 .heading {
@@ -37,20 +37,18 @@ body {
 
 .box {
   border: 1px solid $primary;
+  box-sizing: border-box;
+  display: flex;
+  flex-wrap: wrap;
   float: left;
-  width: 540px
+  padding: 0 10px;
+  width: 85%
 }
 
 .search {
-  height: 45px;
-  &.lg {
-    padding: 0 2.5%;
-    width: 95%
-  }
-  &.sm {
-    padding: 0 1%;
-    width: 20%
-  }
+  height: 43px;
+  padding: 0;
+    width: 100%
 }
 
 .box, .search {
@@ -62,11 +60,11 @@ body {
   border-radius: 0 5px 5px 0;
   color: #fff;
   cursor: pointer;
-  height: 47px;
+  height: 45px;
   padding: 0;
   outline: none;
   transition: all 100ms ease-in-out;
-  width: 98px
+  width: 15%
 }
 
 .button:hover {
@@ -91,7 +89,7 @@ textarea:focus, input:focus {
   color: #a9b1b5;
   cursor: default;
   display: inline-block;
-  margin: 5px;
+  margin: 5px 5px 5px 0;
   padding: 6px 15px;
   transition: all 300ms ease-in-out
 }
@@ -120,7 +118,7 @@ textarea:focus, input:focus {
 @import 'autocomplete';
 
 @media only screen and (max-width: 1000px) {
-  .wrapper {
-    width: 70%
+  .container {
+    width: 80vw
   }
 }

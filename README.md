@@ -63,7 +63,7 @@ The live version can be found on https://gitignore.nurlan.co
 
 - .gitignore files come from [github/gitignore][gitignore]
 - main idea and maybe design comes from [joeblau/gitignore.io][git-io-gh]
-- autocompletion comes from [Pixabay/JavaScript-autoComplete][autocomplete]
+- autocompletion comes from [LeaVerou/awesomplete][autocomplete]
 
 ## License
 
@@ -74,7 +74,7 @@ The live version can be found on https://gitignore.nurlan.co
 
 
 
-[autocomplete]: https://github.com/Pixabay/JavaScript-autoComplete
+[autocomplete]: https://github.com/LeaVerou/awesomplete
 [brew]: https://brew.sh
 [git-io]: https://gitignore.io
 [git-io-gh]: https://github.com/joeblau/gitignore.io
