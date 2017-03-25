@@ -1,5 +1,7 @@
 $primary: #0080FF;
 $prim-dark: darken($primary, 10%);
+$prim-light: lighten($primary, 15%);
+$srch-width: 85%;
 
 @import 'fonts';
 
@@ -48,7 +50,7 @@ body {
 .search {
   height: 43px;
   padding: 0;
-    width: 100%
+  width: 100%
 }
 
 .box, .search {
@@ -64,11 +66,10 @@ body {
   padding: 0;
   outline: none;
   transition: all 100ms ease-in-out;
-  width: 15%
-}
-
-.button:hover {
-  background: $prim-dark
+  width: 15%;
+  &:hover {
+    background: $prim-dark
+  }
 }
 
 .search, .button {
@@ -88,31 +89,26 @@ textarea:focus, input:focus {
   border-radius: 5px;
   color: #a9b1b5;
   cursor: default;
-  display: inline-block;
   margin: 5px 5px 5px 0;
   padding: 6px 15px;
-  transition: all 300ms ease-in-out
-}
-
-.tag:hover{
-  border: 1px solid $primary;
-  color: $primary
-}
-
-.tag.delete {
-  border: 1px solid #f00;
-  color: #f00
-}
-
-.tag.delete .remove {
-  display: inline
+  transition: all 300ms ease-in-out;
+  &:hover {
+    border: 1px solid #f00;
+    color: #f00;
+    .remove {
+      color: #f00;
+      margin-left: 10px;
+      width: auto;
+    }
+  }
 }
 
 .remove {
-  display: none;
+  display: inline-block;
+  width: 0;
   cursor: pointer;
-  margin-left: 6px;
-  margin-right: -2px
+  transition: 0.2s all;
+  overflow: hidden
 }
 
 @import 'autocomplete';

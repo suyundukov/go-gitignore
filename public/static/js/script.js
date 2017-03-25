@@ -11,7 +11,7 @@
   new Awesomplete(input, {
     autoFirst: true,
     minChars: 1,
-    maxItems: 180,
+    maxItems: 30,
 	  list: files
   })
 
@@ -31,29 +31,29 @@
     this.value = ''
   })
 
+  // Focus on input, just in case if html autofocus failed
+  window.onload = input.focus()
+
+  // On autocomplete window opening
   input.addEventListener('awesomplete-open', function(){
     list.style.borderBottomLeftRadius = '0'
   })
 
+  // On autocomplete window closing
   input.addEventListener('awesomplete-close', function(){
     list.style.borderBottomLeftRadius = '5px'
   })
 
   // Remove tag if 'Backspace' was pressed
   input.onkeydown = function(e) {
-    if (e.keyCode == 8 && tags.length > 0 && input.value == '') {
-      var el = input.parentNode.previousElementSibling
-      
-      if (!el.classList.contains('delete')) {
-        el.classList.add('delete')
-      } else {
-        removeTag(el)
-      }
-
+    if (e.keyCode == 8 && tags.length > 0 && this.value == '') {
+      var el = this.parentNode.previousElementSibling
+      removeTag(el)
       inputWidth()
     }
   }
 
+  // If any key was pressed
   input.onkeypress = function() {
     inputWidth()
   }
@@ -63,6 +63,7 @@
     if (tags.length === 0) {
       awe.style.width = '100%'
       list.style.padding = '0 10px'
+      input.placeholder = 'Search Operating Systems, IDEs, or Programming Languages'
     } else {
       awe.style.width = ((input.value.length + 1) * 15) + 'px'
     }
@@ -81,7 +82,6 @@
     var tag = document.createElement('span')
     tag.className = 'tag'
     tag.appendChild(document.createTextNode(el))
-    tag.addEventListener('click', toggleRemoveTag, false)
 
     var remove = document.createElement('span')
     remove.className = 'remove'
@@ -94,26 +94,11 @@
     list.insertBefore(tag, input.parentElement)
   }
 
-  // Toggle remove tag on click
-  function toggleRemoveTag(e) {
-    var el = e.target.classList
-
-    if (!el.contains('delete')) {
-      el.add('delete')
-    } else {
-      el.remove('delete')
-    }
-  }
-
   // Delete tag from the list of tags
   function removeTag(e) {
     tags.splice(tags.indexOf(e.childNodes[0].nodeValue), 1)
     list.removeChild(e)
-
     input.focus()
-
-    if (tags.length == 0) {
-      input.placeholder = 'Search Operating Systems, IDEs, or Programming Languages'
-    }
+    inputWidth()
   }
 }())
