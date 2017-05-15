@@ -1,0 +1,14 @@
+runtime: go
+api_version: go1
+
+default_expiration: "30d"
+
+handlers:
+- url: /.*
+  script: _go_app
+
+skip_files:
+  - .git
+  - node_modules/
+  - scripts/
+  - vendor/

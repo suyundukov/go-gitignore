@@ -1,6 +1,6 @@
-// +build !appengine
+// +build appengine
 
-package main
+package gitignore
 
 import (
 	"fmt"
@@ -18,26 +18,26 @@ import (
 var (
 	fileList  []string
 	ignoreMap map[string][]byte
-	mainRes   []byte
+	homePage  []byte
 )
 
-func main() {
+func init() {
 	r := httprouter.New()
 
 	r.ServeFiles("/public/*filepath", http.Dir("public/static/"))
 	r.GET("/api/:name", apiHandler)
 	r.GET("/", mainHandler)
 
-	log.Fatal(http.ListenAndServe(":8080", r))
+	http.Handle("/", r)
 }
 
 func init() {
 	ignoreMap = initIgnoreFiles()
-	mainRes = initIndexPage()
+	homePage = initIndexPage()
 }
 
 func mainHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	w.Write(mainRes)
+	w.Write(homePage)
 }
 
 func apiHandler(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
