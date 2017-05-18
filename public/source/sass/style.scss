@@ -1,4 +1,4 @@
-$primary: #0080FF;
+$primary: #f05133;
 $prim-dark: darken($primary, 10%);
 $prim-light: lighten($primary, 15%);
 $srch-width: 85%;
@@ -6,6 +6,7 @@ $srch-width: 85%;
 @import 'fonts';
 
 html, body {
+  background: #f7f7f7;
   font-family: 'FF Kievit Pro', sans-serif;
   height: 100%;
   margin: 0
@@ -28,16 +29,25 @@ body {
 
 .heading {
   margin-bottom: 40px;
-  text-align: center;
   img {
-    width: 60%
+    width: 25%
   }
-  p {
-    margin: 0
+  h1 {
+    font-weight: normal;
+    margin: 0;
+    font-size: 2.8em;
+    span {
+      color: $primary
+    }
   }
 }
 
+.centered {
+  text-align: center
+}
+
 .box {
+  background: #fff;
   border: 1px solid $primary;
   box-sizing: border-box;
   cursor: text;
@@ -113,6 +123,21 @@ textarea:focus, input:focus {
   cursor: pointer;
   transition: 0.2s all;
   overflow: hidden
+}
+
+.footer {
+  color: #9a9a9a;
+  float: left;
+  font-size: 1.2em;
+  margin-top: 5px;
+  width: 100%;
+  p a {
+    text-decoration: none;
+    color: #4495d4;
+    &:hover {
+      text-decoration: underline
+    }
+  }
 }
 
 @import 'autocomplete';
