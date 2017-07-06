@@ -1,77 +1,31 @@
-// +build !appengine
-
 package main
 
 import (
+	"database/sql"
 	"fmt"
 	"io/ioutil"
 	"log"
-	"net/http"
 	"os"
 	"path/filepath"
-	"sort"
 	"strings"
 
-	"github.com/julienschmidt/httprouter"
+	"github.com/nurlansu/go-gitignore/models/database"
+	"github.com/nurlansu/go-gitignore/models/route"
 )
 
 var (
-	fileList  []string
-	ignoreMap map[string][]byte
-	mainRes   []byte
+	fileList []string
 )
 
 func main() {
-	r := httprouter.New()
-
-	r.ServeFiles("/public/*filepath", http.Dir("public/static/"))
-	r.GET("/api/:name", apiHandler)
-	r.GET("/", mainHandler)
-
-	log.Fatal(http.ListenAndServe(":8080", r))
+	fmt.Println("I'm starting")
+	db := database.Open("./data/db.sqlite")
+	loadIgnoreFiles(db)
+	fmt.Println("I'm OK")
+	route.StartServer(db)
 }
 
-func init() {
-	ignoreMap = initIgnoreFiles()
-	mainRes = initIndexPage()
-}
-
-func mainHandler(w http.ResponseWriter, r *http.Request, _ httprouter.Params) {
-	w.Write(mainRes)
-}
-
-func apiHandler(w http.ResponseWriter, r *http.Request, ps httprouter.Params) {
-	params := ps.ByName("name")
-	names := strings.Split(params, ",")
-	sort.Strings(names)
-	res := apiResponse(names)
-	w.Header().Set("Content-Type", "text/plain; charset=utf-8")
-	w.Write(res)
-}
-
-func apiResponse(names []string) (res []byte) {
-	for _, name := range names {
-		ignoreTitle := []byte(fmt.Sprintf("\n%s %s %s\n", "###", strings.Title(name), "###"))
-		content := ignoreMap[name]
-		content = append(ignoreTitle, content...)
-		res = append(res, content...)
-	}
-
-	return
-}
-
-func initIndexPage() (res []byte) {
-	res, err := ioutil.ReadFile("public/index.html")
-	if err != nil {
-		log.Fatalf("Error, parsing index.html: %v", err)
-	}
-
-	return
-}
-
-func initIgnoreFiles() (list map[string][]byte) {
-	list = make(map[string][]byte)
-
+func loadIgnoreFiles(db *sql.DB) {
 	err := filepath.Walk("data/gitignore/", walker)
 	if err != nil {
 		log.Fatalf("Error, in filepath.Walk(): %v", err)
@@ -83,7 +37,7 @@ func initIgnoreFiles() (list map[string][]byte) {
 			log.Fatalf("Error, reading files: %v", err)
 		}
 		name := strings.ToLower(strings.TrimSuffix(filepath.Base(file), ".gitignore"))
-		list[name] = data
+		database.PutItem(db, name, data)
 	}
 
 	return

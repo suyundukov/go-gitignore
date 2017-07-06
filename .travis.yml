@@ -1,7 +1,7 @@
 language: go
 
 go:
-  - 1.8
+  - 1.8.3
 
 env:
   - NODE_VERSION=node
@@ -14,12 +14,10 @@ notifications:
     on_failure: change
 
 before_install:
-  - openssl aes-256-cbc -K $encrypted_f0159a9f8f9a_key -iv $encrypted_f0159a9f8f9a_iv -in service-account.json.enc -out service-account.json -d
   - nvm install $NODE_VERSION
   - nvm use $NODE_VERSION
 
 install:
-  - go get ./...
   - go get -u github.com/tdewolff/minify/cmd/minify
   - npm install
 
@@ -27,8 +25,6 @@ script:
   - ./scripts/build.sh
 
 deploy:
-  provider: gae
+  provider: heroku
   skip_cleanup: true
-  on: master
-  project: go-gitignore
-  version: v1
+  api_key: $HEROKU_PASSWORD

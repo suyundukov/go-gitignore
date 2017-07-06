@@ -57,7 +57,7 @@ This app uses [httprouter][router] for routing. You can make it work without, by
 
 ## Demo
 
-The live version can be found on https://gitignore.nurlan.co
+The live version can be found on https://go-gitignore.herokuapp.com/
 
 ## Thanks
 
