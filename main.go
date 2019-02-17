@@ -2,7 +2,6 @@ package main
 
 import (
 	"database/sql"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
@@ -18,10 +17,8 @@ var (
 )
 
 func main() {
-	fmt.Println("I'm starting")
 	db := database.Open("./data/db.sqlite")
 	loadIgnoreFiles(db)
-	fmt.Println("I'm OK")
 	route.StartServer(db)
 }
 
