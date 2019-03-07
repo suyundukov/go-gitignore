@@ -14,6 +14,15 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
+func contains(arr []string, str string) bool {
+	for _, val := range arr {
+		if val == str {
+			return true
+		}
+	}
+	return false
+}
+
 func mainHandler() httprouter.Handle {
 	res, err := ioutil.ReadFile("public/index.html")
 	if err != nil {
@@ -30,20 +39,30 @@ func apiHandler(db *sql.DB) httprouter.Handle {
 		params := ps.ByName("name")
 		names := strings.Split(params, ",")
 		sort.Strings(names)
-		res := apiResponse(db, names)
+
+		var res []byte
+		if contains(names, "list") {
+			res = apiResponse(db, "list", []string{})
+		} else {
+			res = apiResponse(db, "", names)
+		}
 		w.Header().Set("Content-Type", "text/plain; charset=utf-8")
 		w.Write(res)
 	}
 }
 
-func apiResponse(db *sql.DB, names []string) []byte {
+func apiResponse(db *sql.DB, val string, names []string) []byte {
 	var res []byte
 
-	for _, name := range names {
-		ignoreTitle := []byte(fmt.Sprintf("\n%s %s %s\n", "###", strings.Title(name), "###"))
-		content := database.GetItem(db, name).Body
-		content = append(ignoreTitle, content...)
-		res = append(res, content...)
+	if val == "list" {
+		res = database.GetItem(db, "all").Body
+	} else {
+		for _, name := range names {
+			ignoreTitle := []byte(fmt.Sprintf("\n%s %s %s\n", "###", strings.Title(name), "###"))
+			content := database.GetItem(db, name).Body
+			content = append(ignoreTitle, content...)
+			res = append(res, content...)
+		}
 	}
 
 	return res

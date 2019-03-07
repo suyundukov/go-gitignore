@@ -28,14 +28,19 @@ func loadIgnoreFiles(db *sql.DB) {
 		log.Fatalf("Error, in filepath.Walk(): %v", err)
 	}
 
+	var names []string
+
 	for _, file := range fileList {
 		data, err := ioutil.ReadFile(file)
 		if err != nil {
 			log.Fatalf("Error, reading files: %v", err)
 		}
-		name := strings.ToLower(strings.TrimSuffix(filepath.Base(file), ".gitignore"))
-		database.PutItem(db, name, data)
+		name := strings.TrimSuffix(filepath.Base(file), ".gitignore")
+		names = append(names, name)
+		database.PutItem(db, strings.ToLower(name), data)
 	}
+
+	database.PutItem(db, "all", []byte(strings.Join(names, ",")))
 
 	return
 }
