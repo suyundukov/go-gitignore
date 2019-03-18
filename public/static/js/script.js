@@ -1,23 +1,13 @@
 (function() {
-  var button = document.getElementById('button');
-  var input = document.getElementById('input');
-  var list = document.getElementById('list');
-  var files = ['Actionscript', 'Ada', 'Agda', 'Android', 'AppEngine', 'AppceleratorTitanium', 'ArchLinuxPackages', 'Autotools', 'C++', 'C', 'CFWheels', 'CMake', 'CUDA', 'CakePHP', 'ChefCookbook', 'Clojure', 'CodeIgniter', 'CommonLisp', 'Composer', 'Concrete5', 'Coq', 'CraftCMS', 'D', 'DM', 'Dart', 'Delphi', 'Drupal', 'EPiServer', 'Eagle', 'Elisp', 'Elixir', 'Elm', 'Erlang', 'ExpressionEngine', 'ExtJs', 'Fancy', 'Finale', 'ForceDotCom', 'Fortran', 'FuelPHP', 'GWT', 'Gcov', 'GitBook', 'Anjuta', 'Ansible', 'Archives', 'Backup', 'Bazaar', 'BricxCC', 'CVS', 'Calabash', 'Cloud9', 'CodeKit', 'DartEditor', 'Diff', 'Dreamweaver', 'Dropbox', 'Eclipse', 'EiffelStudio', 'Emacs', 'Ensime', 'Espresso', 'FlexBuilder', 'GPG', 'Images', 'JDeveloper', 'JEnv', 'JetBrains', 'KDevelop4', 'Kate', 'Lazarus', 'LibreOffice', 'Linux', 'LyX', 'MATLAB', 'Mercurial', 'MicrosoftOffice', 'ModelSim', 'Momentics', 'MonoDevelop', 'NetBeans', 'Ninja', 'NotepadPP', 'Octave', 'Otto', 'PSoCCreator', 'Patch', 'PuTTY', 'Redcar', 'Redis', 'SBT', 'SVN', 'SlickEdit', 'Stata', 'SublimeText', 'SynopsysVCS', 'Tags', 'TextMate', 'TortoiseGit', 'Vagrant', 'Vim', 'VirtualEnv', 'Virtuoso', 'VisualStudioCode', 'WebMethods', 'Windows', 'Xcode', 'XilinxISE', 'macOS', 'Go', 'Godot', 'Gradle', 'Grails', 'Haskell', 'IGORPro', 'Idris', 'JBoss', 'Java', 'Jekyll', 'Joomla', 'Julia', 'KiCad', 'Kohana', 'Kotlin', 'LabVIEW', 'Laravel', 'Leiningen', 'LemonStand', 'Lilypond', 'Lithium', 'Lua', 'Magento', 'Maven', 'Mercury', 'MetaProgrammingSystem', 'Nanoc', 'Nim', 'Node', 'OCaml', 'Objective-C', 'Opa', 'OpenCart', 'OracleForms', 'Packer', 'Perl', 'Perl6', 'Phalcon', 'PlayFramework', 'Plone', 'Prestashop', 'Processing', 'PureScript', 'Python', 'Qooxdoo', 'Qt', 'R', 'ROS', 'Rails', 'RhodesRhomobile', 'Ruby', 'Rust', 'SCons', 'Sass', 'Scala', 'Scheme', 'Scrivener', 'Sdcc', 'SeamGen', 'SketchUp', 'Smalltalk', 'Stella', 'SugarCRM', 'Swift', 'Symfony', 'SymphonyCMS', 'TeX', 'Terraform', 'Textpattern', 'TurboGears2', 'Typo3', 'Umbraco', 'Unity', 'UnrealEngine', 'VVVV', 'VisualStudio', 'Waf', 'WordPress', 'Xojo', 'Yeoman', 'Yii', 'ZendFramework', 'Zephir', 'Bazel', 'InforCMS', 'Kentico', 'Phoenix', 'Exercism', 'Hugo', 'JBoss4', 'JBoss6', 'Cordova', 'Meteor', 'NWjs', 'Nuxt', 'Vue', 'Snap', 'Logtalk', 'Bitrix', 'CodeSniffer', 'Magento1', 'Magento2', 'Pimcore', 'ThinkPHP', 'Puppet', 'Drupal7', 'JupyterNotebooks', 'Nikola', 'Racket', 'Red', 'Splunk', 'Xilinx', 'AtmelStudio', 'IAR_EWARM'];
+  var awe;
+  var button = document.querySelector('.button');
+  var input = document.querySelector('input');
+  var list = document.querySelector('.box');
   var tags = [];
 
   button.addEventListener('click', getGitIgnore, false);
 
-  // Initialize autocomplete
-  new Awesomplete(input, {
-    autoFirst: true,
-    minChars: 1,
-    maxItems: 30,
-	  list: files
-  });
-
-  var awe = document.getElementById('awe');
-
-  input.addEventListener('awesomplete-selectcomplete', function(e){
+  input.addEventListener('awesomplete-selectcomplete', function(e) {
     var el = this.value;
 
     if (!tags.includes(el)) {
@@ -32,15 +22,18 @@
   })
 
   // Focus on input, just in case if html autofocus failed
-  window.onload = input.focus();
+  window.onload = function() {
+    getIgnoreList();
+    input.focus();
+  }
 
   // On autocomplete window opening
-  input.addEventListener('awesomplete-open', function(){
+  input.addEventListener('awesomplete-open', function() {
     list.style.borderBottomLeftRadius = '0';
   });
 
   // On autocomplete window closing
-  input.addEventListener('awesomplete-close', function(){
+  input.addEventListener('awesomplete-close', function() {
     list.style.borderBottomLeftRadius = '5px';
   });
 
@@ -67,6 +60,28 @@
     } else {
       awe.style.width = ((input.value.length + 1) * 15) + 'px';
     }
+  }
+
+  // Get all .gitignore files
+  function getIgnoreList() {
+    var ajax = new XMLHttpRequest();
+    ajax.open('GET', '/api/list', true);
+    ajax.onreadystatechange = function() {
+      if (ajax.readyState == XMLHttpRequest.DONE) {
+        var files = ajax.responseText.split(',');
+
+        // Initialize autocomplete
+        new Awesomplete(input, {
+          autoFirst: true,
+          minChars: 1,
+          maxItems: 30,
+          list: files
+        });
+
+        awe = document.querySelector('.awesomplete');
+      }
+    }
+    ajax.send(null);
   }
 
   // Generate .gitignore file

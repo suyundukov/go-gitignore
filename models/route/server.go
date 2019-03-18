@@ -17,9 +17,14 @@ func StartServer(db *sql.DB) {
 	r.GET("/api/:name", apiHandler(db))
 	r.GET("/", mainHandler())
 
+	log.Fatal(http.ListenAndServe(":"+initPort(), r))
+}
+
+func initPort() string {
 	port := os.Getenv("PORT")
 	if port == "" {
 		port = "8080"
 	}
-	log.Fatal(http.ListenAndServe(":"+port, r))
+
+	return port
 }
