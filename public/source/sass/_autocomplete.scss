@@ -1,13 +1,16 @@
 .awesomplete {
   margin: 0 5px;
   width: 100%;
+
   [hidden] {
 	  display: none
   }
+
   .visually-hidden {
 	  clip: rect(0, 0, 0, 0);
 	  position: absolute
   }
+
   > ul {
     background: #fff;
 	  border: 1px solid $primary;
@@ -28,9 +31,11 @@
     text-align: center;
     width: $srch-width;
     z-index: 1;
+
     &:empty {
 	    display: none
     }
+
     > li {
       color: #333;
       font-size: 20px;
@@ -40,10 +45,12 @@
 	    position: relative;
       text-overflow: ellipsis;
       white-space: nowrap;
+
       &:hover {
 	      background: $prim-light;
 	      color: white
       }
+
       &[aria-selected="true"] {
 	      background: $primary;
         color: #fff
