@@ -1,7 +1,7 @@
 <p align="center">
   <br>
   <a href="https://gitignore.nurlan.co">
-    <img src="https://i.nurlan.co/go-gitignore.svg" width="100%" height="120">
+    <img src="https://nurlan.co/cdn/go-gitignore.svg" width="100%" height="120">
   </a>
   <strong>Generate .gitignore files for your project</strong>
   <br><br>
@@ -68,7 +68,7 @@ The live version can be found on https://go-gitignore.herokuapp.com/
 ## License
 
 <p align="center">
-  <a href="./LICENSE"><img src="https://i.nurlan.co/logo.svg" width="100%" height="128"></a>
+  <a href="./LICENSE"><img src="https://nurlan.co/cdn/logo.svg" width="100%" height="128"></a>
   <a href="./LICENSE"><strong>MIT</strong></a>
 </p>
 
