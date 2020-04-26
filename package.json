@@ -16,9 +16,9 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "autoprefixer": "^9.6.1",
-    "node-sass": "^4.12.0",
-    "postcss-cli": "^6.1.3"
+    "autoprefixer": "^9.7.6",
+    "node-sass": "^4.14.0",
+    "postcss-cli": "^7.1.0"
   },
   "autoprefixer": {
     "browsers": "> 1%, last 2 versions, ie >= 9"
