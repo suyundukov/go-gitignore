@@ -1,4 +1,5 @@
-data/*.sqlite
 build/
 vendor/
 *.css
+*.css.map
+*.sqlite

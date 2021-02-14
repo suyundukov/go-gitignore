@@ -17,9 +17,9 @@ type Item struct {
 
 // GetItem returns item from database
 func GetItem(db *sql.DB, id string) Item {
-	sql := "SELECT * FROM ignores WHERE id = ?"
+	q := "SELECT * FROM ignores WHERE id = ?"
 
-	stmt, err := db.Prepare(sql)
+	stmt, err := db.Prepare(q)
 	if err != nil {
 		log.Printf("Error, preparing statement : %v", err)
 	}
@@ -37,9 +37,9 @@ func GetItem(db *sql.DB, id string) Item {
 
 // PutItem puts item in database
 func PutItem(db *sql.DB, id string, body []byte) {
-	sql := "INSERT INTO ignores(id, body) VALUES(?, ?)"
+	q := "INSERT INTO ignores(id, body) VALUES(?, ?)"
 
-	stmt, err := db.Prepare(sql)
+	stmt, err := db.Prepare(q)
 	if err != nil {
 		log.Printf("Error, preparing statement : %v", err)
 		return
@@ -67,13 +67,13 @@ func Open(path string) *sql.DB {
 }
 
 func createTable(db *sql.DB) {
-	sql := `
-	CREATE TABLE IF NOT EXISTS ignores(
-        id TEXT NOT NULL PRIMARY KEY,
-        body BLOB
-    );
-	`
-	_, err := db.Exec(sql)
+	q := `
+CREATE TABLE IF NOT EXISTS ignores(
+	id TEXT NOT NULL PRIMARY KEY,
+	body BLOB
+);
+`
+	_, err := db.Exec(q)
 	if err != nil {
 		log.Fatalf("Error, creating table : %v", err)
 	}

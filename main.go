@@ -17,13 +17,13 @@ var (
 )
 
 func main() {
-	db := database.Open("./data/db.sqlite")
+	db := database.Open("./db.sqlite")
 	loadIgnoreFiles(db)
 	route.StartServer(db)
 }
 
 func loadIgnoreFiles(db *sql.DB) {
-	err := filepath.Walk("data/gitignore/", walker)
+	err := filepath.Walk("gitignore/", walker)
 	if err != nil {
 		log.Fatalf("Error, in filepath.Walk(): %v", err)
 	}
